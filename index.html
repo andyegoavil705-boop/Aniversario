@@ -77,6 +77,34 @@ button{
   margin-top:20px;
   font-size:20px;
 }
+  .brillo{
+  background: linear-gradient(90deg,#fff,#ffd700,#fff);
+  background-size:200% auto;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation: brilloAnim 2s linear infinite;
+}
+
+@keyframes brilloAnim{
+  to{
+    background-position:200% center;
+  }
+}
+
+#mensajeSorpresa{
+  display:none;
+  margin-top:20px;
+  font-size:20px;
+  opacity:0;
+  transform:translateY(20px);
+  transition: all 1s ease;
+}
+
+#mensajeSorpresa.mostrar{
+  display:block;
+  opacity:1;
+  transform:translateY(0);
+}
 </style>
 </head>
 
@@ -90,7 +118,7 @@ button{
 
   <img src="foto.jpg">
 
-  <h1>Andy ❤️ Betty</h1>
+  <h1>Andy ❤️ <span class="brillo">Betty</span></h1>
   <p>Desde el 21 de Febrero del 2022</p>
 
   <div id="contador"></div>
@@ -98,9 +126,21 @@ button{
   <button onclick="mostrarMensaje()">Mensaje especial 💌</button>
 
   <div id="mensajeSorpresa">
-    Gracias por estos 4 años increíbles.  
-    Te elegiría mil veces más.  
-    Eres mi persona favorita en el mundo ❤️
+    Gracias por existir, por quedarte y por elegirme cada día. 💕
+
+Desde aquel <strong>21 de febrero del 2022</strong>, mi vida tiene tu nombre.
+
+Cuatro años no son suficientes…
+porque si estos años fueron increíbles,
+no imagino lo hermoso que será toda una vida contigo.
+
+Eres mi casualidad más bonita y mi decisión más segura.
+
+<h2 style="margin-top:15px; color:#fff;">
+Mi amor, mi lugar favorito siempre será a tu lado ❤️
+</h2>
+
+¿Te quedas conmigo para todos los años que vienen? 💍✨
   </div>
 
   <audio id="musica" src="musica.mp3" loop></audio>
@@ -134,7 +174,8 @@ function iniciar(){
 
 // mensaje sorpresa
 function mostrarMensaje(){
-  document.getElementById("mensajeSorpresa").style.display="block";
+  const mensaje = document.getElementById("mensajeSorpresa");
+  mensaje.classList.add("mostrar");
 }
 
 // corazones
