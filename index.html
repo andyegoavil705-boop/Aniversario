@@ -91,6 +91,14 @@ function actualizar(){
 
 setInterval(actualizar,1000);
 actualizar();
+  function reproducirMusica() {
+  const audio = document.getElementById("musica");
+  audio.play().then(() => {
+    console.log("Reproduciendo...");
+  }).catch(error => {
+    alert("Toca el botón nuevamente para activar el audio 🔊");
+  });
+}
 </script>
 
 </body>
