@@ -8,7 +8,7 @@
 <style>
 body{
   margin:0;
-  font-family: 'Arial', sans-serif;
+  font-family: Arial, sans-serif;
   background: linear-gradient(180deg,#ff758c,#ff7eb3);
   overflow-x:hidden;
   text-align:center;
@@ -24,75 +24,62 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  font-size:28px;
+  font-size:24px;
   z-index:10;
   cursor:pointer;
 }
 
 /* Nombre brillante */
-.nombre{
-  font-size:40px;
-  font-weight:bold;
-  animation:brillar 2s infinite alternate;
+.brillo{
+  background: linear-gradient(90deg,#fff,#ffd700,#fff);
+  background-size:200% auto;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation: brilloAnim 2s linear infinite;
 }
 
-@keyframes brillar{
-  from{ text-shadow:0 0 10px white; }
-  to{ text-shadow:0 0 30px #fff,0 0 50px #ff0080; }
+@keyframes brilloAnim{
+  to{ background-position:200% center; }
 }
 
 /* Card */
 .card{
-  padding:20px;
   margin-top:40px;
+  padding:20px;
 }
 
 img{
   width:260px;
   border-radius:20px;
-  box-shadow:0 0 20px rgba(0,0,0,0.4);
+  box-shadow:0 0 20px rgba(0,0,0,0.3);
 }
 
-/* contador */
 #contador{
-  font-size:26px;
-  margin-top:20px;
+  font-size:22px;
   font-weight:bold;
-  animation:fade 1s infinite alternate;
+  margin-top:15px;
 }
 
-@keyframes fade{
-  from{opacity:0.7}
-  to{opacity:1}
-}
-
-/* corazones flotando */
-.heart{
-  position:fixed;
-  bottom:-20px;
-  font-size:20px;
-  animation:flotar 6s linear infinite;
-}
-
-@keyframes flotar{
-  0%{transform:translateY(0);opacity:1}
-  100%{transform:translateY(-110vh);opacity:0}
-}
-
-/* carta */
-#carta{
+/* Mensaje animado */
+#mensajeSorpresa{
   display:none;
-  background:white;
-  color:#ff4d6d;
-  padding:20px;
-  margin:20px;
-  border-radius:15px;
+  margin-top:20px;
+  font-size:20px;
+  opacity:0;
+  transform:translateY(20px);
+  transition: all 1s ease;
+}
+
+#mensajeSorpresa.mostrar{
+  display:block;
+  opacity:1;
+  transform:translateY(0);
 }
 
 button{
-  padding:12px 25px;
+  padding:12px 20px;
   border:none;
-  border-radius:25px;
+  border-radius:10px;
   background:white;
   color:#ff4d6d;
   font-weight:bold;
@@ -100,11 +87,17 @@ button{
   cursor:pointer;
 }
 
-/* mensaje escrito */
-#mensaje{
-  margin-top:20px;
+/* Corazones */
+.heart{
+  position:fixed;
+  bottom:-20px;
   font-size:20px;
-  min-height:40px;
+  animation: flotar 6s linear infinite;
+}
+
+@keyframes flotar{
+  0%{transform:translateY(0);opacity:1;}
+  100%{transform:translateY(-110vh);opacity:0;}
 }
 </style>
 </head>
@@ -112,28 +105,26 @@ button{
 <body>
 
 <div id="inicio" onclick="iniciar()">
-  Nuestra historia comenzó el 21 de Febrero ❤️ <br> (Toca para continuar)
+  Toca para comenzar ❤️
 </div>
 
 <div class="card">
+
 <img src="foto.jpg">
 
-<h1>Felices 4 Años ❤️</h1>
-
-<div class="nombre">BETTY ✨</div>
+<h1>Andy ❤️ <span class="brillo">Betty</span></h1>
 
 <p>Desde el 21 de Febrero del 2022</p>
 
 <div id="contador"></div>
 
-<div id="mensaje"></div>
+<button onclick="mostrarMensaje()">Mensaje especial 💌</button>
 
-<button onclick="mostrarCarta()">Haz clic si me amas ❤️</button>
-
-<div id="carta">
-  Betty… estos 4 años no son solo tiempo.  
-  Son 1461 días demostrando que eres el amor correcto.  
-  Gracias por existir en mi vida. ❤️  
+<div id="mensajeSorpresa">
+  Gracias por existir y por quedarte.
+  Desde aquel 21 de febrero mi vida tiene tu nombre.
+  Si estos 4 años fueron increíbles…
+  no imagino lo hermosa que será toda una vida contigo ❤️
 </div>
 
 <audio id="musica" loop>
@@ -156,67 +147,31 @@ function actualizar(){
   const segundos = Math.floor((diferencia / 1000) % 60);
 
   document.getElementById("contador").innerHTML =
-  dias+" días "+horas+" horas "+minutos+" minutos "+segundos+" segundos ❤️";
+    dias+" días "+horas+" horas "+minutos+" minutos "+segundos+" segundos ❤️";
 }
 
 setInterval(actualizar,1000);
+actualizar();
 
-/* inicio */
 function iniciar(){
   document.getElementById("inicio").style.display="none";
-
-  const audio = document.getElementById("musica");
-  audio.volume = 0.7;
-
-  audio.play().then(() => {
-    console.log("Música iniciada");
-  }).catch(error => {
-    console.log("Error al reproducir:", error);
-  });
-
-  escribirMensaje();
-}
+  document.getElementById("musica").play();
 }
 
-/* escribir mensaje */
-const texto = "Betty, desde aquel día mi mundo dejó de ser normal y empezó a ser perfecto...";
-let i=0;
-
-function escribirMensaje(){
-  if(i<texto.length){
-    document.getElementById("mensaje").innerHTML+=texto.charAt(i);
-    i++;
-    setTimeout(escribirMensaje,50);
-  }
+function mostrarMensaje(){
+  document.getElementById("mensajeSorpresa").classList.add("mostrar");
 }
 
-/* carta */
-function mostrarCarta(){
-  document.getElementById("carta").style.display="block";
-}
-
-/* corazones */
+/* Corazones */
 setInterval(()=>{
   const heart=document.createElement("div");
   heart.className="heart";
   heart.innerHTML="❤️";
   heart.style.left=Math.random()*100+"vw";
-  heart.style.animationDuration=(Math.random()*3+3)+"s";
+  heart.style.fontSize=(Math.random()*20+15)+"px";
   document.body.appendChild(heart);
   setTimeout(()=>heart.remove(),6000);
 },500);
-
-/* efecto al tocar */
-document.addEventListener("click",function(e){
-  const sparkle=document.createElement("div");
-  sparkle.innerHTML="✨";
-  sparkle.style.position="fixed";
-  sparkle.style.left=e.clientX+"px";
-  sparkle.style.top=e.clientY+"px";
-  sparkle.style.fontSize="20px";
-  document.body.appendChild(sparkle);
-  setTimeout(()=>sparkle.remove(),800);
-});
 
 </script>
 
