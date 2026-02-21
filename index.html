@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4 Años Juntos ❤️</title>
+
+<style>
+body{
+    margin:0;
+    padding:0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg,#ff758c,#ff7eb3);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    text-align:center;
+}
+
+.container{
+    background: rgba(0,0,0,0.3);
+    padding:40px;
+    border-radius:20px;
+    backdrop-filter: blur(10px);
+}
+
+h1{
+    font-size:32px;
+    margin-bottom:10px;
+}
+
+p{
+    font-size:18px;
+}
+
+#contador{
+    font-size:24px;
+    margin-top:20px;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Felices 4 Años ❤️</h1>
+    <p>Desde el 21 de Febrero del 2022</p>
+    <p>Gracias por estos momentos increíbles juntos.</p>
+
+    <div id="contador"></div>
+</div>
+
+<script>
+const fechaInicio = new Date("2022-02-21T00:00:00");
+
+function actualizarContador(){
+    const ahora = new Date();
+    const diferencia = ahora - fechaInicio;
+
+    const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+    const horas = Math.floor((diferencia / (1000 * 60 * 60)) % 24);
+    const minutos = Math.floor((diferencia / (1000 * 60)) % 60);
+    const segundos = Math.floor((diferencia / 1000) % 60);
+
+    document.getElementById("contador").innerHTML =
+        dias + " días " +
+        horas + " horas " +
+        minutos + " minutos " +
+        segundos + " segundos ❤️";
+}
+
+setInterval(actualizarContador,1000);
+actualizarContador();
+</script>
+
+</body>
+</html>
