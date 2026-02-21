@@ -3,76 +3,114 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Felices 4 Años ❤️</title>
+<title>Andy ❤️ Betty</title>
 
 <style>
 body{
   margin:0;
   font-family: Arial, sans-serif;
+  background: linear-gradient(180deg,#ff758c,#ff7eb3);
+  overflow:hidden;
   text-align:center;
-  background: linear-gradient(to bottom,#ff758c,#ff7eb3);
   color:white;
 }
 
+/* Pantalla inicio */
+#inicio{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:24px;
+  z-index:10;
+  cursor:pointer;
+}
+
+/* Contenido */
 .card{
-  background: rgba(0,0,0,0.2);
-  margin:40px 20px;
-  padding:30px;
-  border-radius:25px;
+  margin-top:40px;
+  padding:20px;
 }
 
 img{
   width:250px;
   border-radius:20px;
   margin-bottom:20px;
-}
-
-h1{
-  font-size:28px;
+  box-shadow:0 0 20px rgba(255,255,255,0.6);
 }
 
 #contador{
-  font-size:24px;
+  font-size:22px;
   font-weight:bold;
-  margin-top:20px;
+  margin:15px 0;
 }
+
 button{
-  padding:10px 20px;
+  padding:12px 20px;
   border:none;
   border-radius:10px;
   background:white;
   color:#ff4d6d;
   font-weight:bold;
   margin-top:15px;
+  cursor:pointer;
+}
+
+/* Corazones */
+.heart{
+  position:fixed;
+  bottom:-20px;
+  font-size:20px;
+  animation: flotar 6s linear infinite;
+}
+
+@keyframes flotar{
+  0%{transform:translateY(0);opacity:1;}
+  100%{transform:translateY(-110vh);opacity:0;}
+}
+
+#mensajeSorpresa{
+  display:none;
+  margin-top:20px;
+  font-size:20px;
 }
 </style>
 </head>
 
 <body>
 
+<div id="inicio" onclick="iniciar()">
+  Toca para comenzar ❤️
+</div>
+
 <div class="card">
 
-<img src="foto.jpg">
+  <img src="foto.jpg">
 
-<h1>Felices 4 Años ❤️</h1>
-<p>Desde el 21 de Febrero del 2022</p>
-<p>Gracias por estos momentos increíbles juntos, Te Amo.</p>
+  <h1>Andy ❤️ Betty</h1>
+  <p>Desde el 21 de Febrero del 2022</p>
 
-<div id="contador"></div>
+  <div id="contador"></div>
 
-<button onclick="reproducirMusica()">
-  Reproducir música 🎵
-</button>
+  <button onclick="mostrarMensaje()">Mensaje especial 💌</button>
 
-<audio id="musica" loop>
-  <source src="musica.mp3"></audio>
-</audio>
+  <div id="mensajeSorpresa">
+    Gracias por estos 4 años increíbles.  
+    Te elegiría mil veces más.  
+    Eres mi persona favorita en el mundo ❤️
+  </div>
+
+  <audio id="musica" src="musica.mp3" loop></audio>
 
 </div>
 
 <script>
 const fechaInicio = new Date("2022-02-21T00:00:00");
 
+// contador
 function actualizar(){
   const ahora = new Date();
   const diferencia = ahora - fechaInicio;
@@ -83,22 +121,33 @@ function actualizar(){
   const segundos = Math.floor((diferencia / 1000) % 60);
 
   document.getElementById("contador").innerHTML =
-    dias + " días " +
-    horas + " horas " +
-    minutos + " minutos " +
-    segundos + " segundos ❤️";
+    dias+" días "+horas+" horas "+minutos+" minutos "+segundos+" segundos ❤️";
 }
-
 setInterval(actualizar,1000);
 actualizar();
-  function reproducirMusica() {
-  const audio = document.getElementById("musica");
-  audio.play().then(() => {
-    console.log("Reproduciendo...");
-  }).catch(error => {
-    alert("Toca el botón nuevamente para activar el audio 🔊");
-  });
+
+// iniciar experiencia
+function iniciar(){
+  document.getElementById("inicio").style.display="none";
+  document.getElementById("musica").play();
 }
+
+// mensaje sorpresa
+function mostrarMensaje(){
+  document.getElementById("mensajeSorpresa").style.display="block";
+}
+
+// corazones
+setInterval(()=>{
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML="❤️";
+  heart.style.left=Math.random()*100+"vw";
+  heart.style.fontSize=(Math.random()*20+15)+"px";
+  document.body.appendChild(heart);
+
+  setTimeout(()=>{heart.remove();},6000);
+},400);
 </script>
 
 </body>
