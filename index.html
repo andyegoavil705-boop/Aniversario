@@ -8,10 +8,9 @@
 <style>
 body{
   margin:0;
-  font-family: Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
   background: linear-gradient(180deg,#ff758c,#ff7eb3);
   overflow-x:hidden;
-overflow-y:auto;
   text-align:center;
   color:white;
 }
@@ -25,34 +24,75 @@ overflow-y:auto;
   display:flex;
   justify-content:center;
   align-items:center;
-  font-size:24px;
+  font-size:28px;
   z-index:10;
   cursor:pointer;
 }
 
-/* Contenido */
+/* Nombre brillante */
+.nombre{
+  font-size:40px;
+  font-weight:bold;
+  animation:brillar 2s infinite alternate;
+}
+
+@keyframes brillar{
+  from{ text-shadow:0 0 10px white; }
+  to{ text-shadow:0 0 30px #fff,0 0 50px #ff0080; }
+}
+
+/* Card */
 .card{
-  margin-top:40px;
   padding:20px;
+  margin-top:40px;
 }
 
 img{
-  width:250px;
+  width:260px;
   border-radius:20px;
-  margin-bottom:20px;
-  box-shadow:0 0 20px rgba(255,255,255,0.6);
+  box-shadow:0 0 20px rgba(0,0,0,0.4);
 }
 
+/* contador */
 #contador{
-  font-size:22px;
+  font-size:26px;
+  margin-top:20px;
   font-weight:bold;
-  margin:15px 0;
+  animation:fade 1s infinite alternate;
+}
+
+@keyframes fade{
+  from{opacity:0.7}
+  to{opacity:1}
+}
+
+/* corazones flotando */
+.heart{
+  position:fixed;
+  bottom:-20px;
+  font-size:20px;
+  animation:flotar 6s linear infinite;
+}
+
+@keyframes flotar{
+  0%{transform:translateY(0);opacity:1}
+  100%{transform:translateY(-110vh);opacity:0}
+}
+
+/* carta */
+#carta{
+  display:none;
+  background:white;
+  color:#ff4d6d;
+  padding:20px;
+  margin:20px;
+  border-radius:15px;
 }
 
 button{
-  padding:12px 20px;
+  padding:12px 25px;
   border:none;
-  border-radius:10px;
+  border-radius:25px;
   background:white;
   color:#ff4d6d;
   font-weight:bold;
@@ -60,51 +100,11 @@ button{
   cursor:pointer;
 }
 
-/* Corazones */
-.heart{
-  position:fixed;
-  bottom:-20px;
-  font-size:20px;
-  animation: flotar 6s linear infinite;
-}
-
-@keyframes flotar{
-  0%{transform:translateY(0);opacity:1;}
-  100%{transform:translateY(-110vh);opacity:0;}
-}
-
-#mensajeSorpresa{
-  display:none;
+/* mensaje escrito */
+#mensaje{
   margin-top:20px;
   font-size:20px;
-}
-  .brillo{
-  background: linear-gradient(90deg,#fff,#ffd700,#fff);
-  background-size:200% auto;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  animation: brilloAnim 2s linear infinite;
-}
-
-@keyframes brilloAnim{
-  to{
-    background-position:200% center;
-  }
-}
-
-#mensajeSorpresa{
-  display:none;
-  margin-top:20px;
-  font-size:20px;
-  opacity:0;
-  transform:translateY(20px);
-  transition: all 1s ease;
-}
-
-#mensajeSorpresa.mostrar{
-  display:block;
-  opacity:1;
-  transform:translateY(0);
+  min-height:40px;
 }
 </style>
 </head>
@@ -112,46 +112,40 @@ button{
 <body>
 
 <div id="inicio" onclick="iniciar()">
-  Toca para comenzar ❤️
+  Nuestra historia comenzó el 21 de Febrero ❤️ <br> (Toca para continuar)
 </div>
 
 <div class="card">
+<img src="foto.jpg">
 
-  <img src="foto.jpg">
+<h1>Felices 4 Años ❤️</h1>
 
-  <h1>Andy ❤️ <span class="brillo">Betty</span></h1>
-  <p>Desde el 21 de Febrero del 2022</p>
+<div class="nombre">BETTY ✨</div>
 
-  <div id="contador"></div>
+<p>Desde el 21 de Febrero del 2022</p>
 
-  <button onclick="mostrarMensaje()">Mensaje especial 💌</button>
+<div id="contador"></div>
 
-  <div id="mensajeSorpresa">
-    Gracias por existir, por quedarte y por elegirme cada día. 💕
+<div id="mensaje"></div>
 
-Desde aquel <strong>21 de febrero del 2022</strong>, mi vida tiene tu nombre.
+<button onclick="mostrarCarta()">Haz clic si me amas ❤️</button>
 
-Cuatro años no son suficientes…
-porque si estos años fueron increíbles,
-no imagino lo hermoso que será toda una vida contigo.
+<div id="carta">
+  Betty… estos 4 años no son solo tiempo.  
+  Son 1461 días demostrando que eres el amor correcto.  
+  Gracias por existir en mi vida. ❤️  
+</div>
 
-Eres mi casualidad más bonita y mi decisión más segura.
-
-<h2 style="margin-top:15px; color:#fff;">
-Mi amor, mi lugar favorito siempre será a tu lado ❤️
-</h2>
-
-¿Te quedas conmigo para todos los años que vienen? 💍✨
-  </div>
-
-  <audio id="musica" src="musica.mp3" loop></audio>
+<audio id="musica" loop>
+  <source src="Música.mp3">
+</audio>
 
 </div>
 
 <script>
+
 const fechaInicio = new Date("2022-02-21T00:00:00");
 
-// contador
 function actualizar(){
   const ahora = new Date();
   const diferencia = ahora - fechaInicio;
@@ -162,34 +156,58 @@ function actualizar(){
   const segundos = Math.floor((diferencia / 1000) % 60);
 
   document.getElementById("contador").innerHTML =
-    dias+" días "+horas+" horas "+minutos+" minutos "+segundos+" segundos ❤️";
+  dias+" días "+horas+" horas "+minutos+" minutos "+segundos+" segundos ❤️";
 }
-setInterval(actualizar,1000);
-actualizar();
 
-// iniciar experiencia
+setInterval(actualizar,1000);
+
+/* inicio */
 function iniciar(){
   document.getElementById("inicio").style.display="none";
   document.getElementById("musica").play();
+  escribirMensaje();
 }
 
-// mensaje sorpresa
-function mostrarMensaje(){
-  const mensaje = document.getElementById("mensajeSorpresa");
-  mensaje.classList.add("mostrar");
+/* escribir mensaje */
+const texto = "Betty, desde aquel día mi mundo dejó de ser normal y empezó a ser perfecto...";
+let i=0;
+
+function escribirMensaje(){
+  if(i<texto.length){
+    document.getElementById("mensaje").innerHTML+=texto.charAt(i);
+    i++;
+    setTimeout(escribirMensaje,50);
+  }
 }
 
-// corazones
+/* carta */
+function mostrarCarta(){
+  document.getElementById("carta").style.display="block";
+}
+
+/* corazones */
 setInterval(()=>{
-  const heart = document.createElement("div");
-  heart.classList.add("heart");
+  const heart=document.createElement("div");
+  heart.className="heart";
   heart.innerHTML="❤️";
   heart.style.left=Math.random()*100+"vw";
-  heart.style.fontSize=(Math.random()*20+15)+"px";
+  heart.style.animationDuration=(Math.random()*3+3)+"s";
   document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),6000);
+},500);
 
-  setTimeout(()=>{heart.remove();},6000);
-},400);
+/* efecto al tocar */
+document.addEventListener("click",function(e){
+  const sparkle=document.createElement("div");
+  sparkle.innerHTML="✨";
+  sparkle.style.position="fixed";
+  sparkle.style.left=e.clientX+"px";
+  sparkle.style.top=e.clientY+"px";
+  sparkle.style.fontSize="20px";
+  document.body.appendChild(sparkle);
+  setTimeout(()=>sparkle.remove(),800);
+});
+
 </script>
 
 </body>
